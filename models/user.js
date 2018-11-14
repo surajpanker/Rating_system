@@ -2,10 +2,11 @@ const mongoose = require('mongoose');
 const validator = require('validator');
 const moment = require('moment-timezone');
 const bcrypt = require('bcryptjs');
-const jwt = require('jsonwebtoken')
+const jwt = require('jsonwebtoken');
 const _ = require('lodash');
-const {ObjectID} = require('mongodb');
-
+const {
+  ObjectID
+} = require('mongodb');
 
 var UserSchema = new mongoose.Schema({
   email: {
@@ -15,8 +16,10 @@ var UserSchema = new mongoose.Schema({
     minlength: 1,
     unique: true,
     validate: {
-      validator: (value)=>{validator.isEmail(value)},
-      message: '{VALUE} 不是合法的信箱'
+      validator: (value) => {
+        validator.isEmail(value)
+      },
+      message: '不是合法信箱'
     }
   },
   password: {
@@ -35,10 +38,9 @@ var UserSchema = new mongoose.Schema({
     minlength: 6
   },
   time: {
-    type: String,
-    default: moment().tz("Asia/Taipei")
+    type: Date
   },
-  studentId: {
+  studentID: {
     type: String,
     required: true
   },
@@ -63,40 +65,41 @@ var UserSchema = new mongoose.Schema({
       required: true
     }
   }]
-});
 
-UserSchema.methods.generateAuthToken = function () {
+})
+
+UserSchema.methods.generateToken = function () {
   var user = this;
   var access = user.roleId;
-  var token = jwt.sign({_id: user._id.toHexString(), access},'abc123').toString();
+  var token = jwt.sign({
+    _id: user._id.toHexString(),
+    access
+  }, 'abc123').toString();
 
-  user.tokens.push({access, token});
-
+  user.tokens.push({
+    access,
+    token
+  });
   return user.save().then(() => {
     return token
   })
 }
 
-UserSchema.methods.toJson = function () {
-  var user = this;
-  var userObject = user.toObject();
-  return _.pick(userObject, ['_id', 'email','name','phone','studentId','department','lineId','roleId'])
-}
-
-
 UserSchema.statics.findByCredentials = function (email, password) {
   var User = this;
 
-  return User.findOne({email}).then(user => {
+  return User.findOne({
+    email
+  }).then(user => {
     if (!email) {
       return Promise.reject("找不到這個信箱");
     }
     return new Promise((resolve, reject) => {
       bcrypt.compare(password, user.password).then(res => {
-        if(res) {
-          resolve(user);
+        if (res) {
+          resolve(user)
         } else {
-          reject("您的密碼錯誤");
+          reject("密碼錯誤喔!!")
         }
       })
     })
@@ -105,11 +108,15 @@ UserSchema.statics.findByCredentials = function (email, password) {
 UserSchema.statics.findByToken = function (token) {
   var User = this;
   var decoded;
+
   try {
+
     decoded = jwt.verify(token, 'abc123')
   } catch (e) {
+
     return Promise.reject();
   }
+
   return User.findOne({
     _id: decoded._id,
     'tokens.token': token,
@@ -117,10 +124,15 @@ UserSchema.statics.findByToken = function (token) {
   })
 }
 
+UserSchema.methods.toJson = function () {
+  var user = this;
+  var userObj = user.toObject();
+  return _.pick(userObj, ['_id', 'email', 'phone', 'studentId', 'department', 'roleId'])
+}
 
 UserSchema.pre('save', function (next) {
   var user = this;
-  if (user.isModified('password')){
+  if (user.isModified('password')) {
     bcrypt.hash(user.password, 10).then(hash => {
       user.password = hash;
       next();
@@ -132,4 +144,6 @@ UserSchema.pre('save', function (next) {
 
 var User = mongoose.model('User', UserSchema);
 
-module.exports = {User}
+module.exports = {
+  User
+}

@@ -1,5 +1,6 @@
-
-var {User} = require('./../models/user.js')
+var {
+  User
+} = require('./../models/user.js')
 
 var authenticate = (req, res, next) => {
   var token = req.header('authToken');
@@ -7,13 +8,14 @@ var authenticate = (req, res, next) => {
     if (!user) {
       return Promise.reject();
     }
-      req.user = user;
-      req.token = token;
-      //console.log(req.user.roleId);
-      next();
-  }).catch(()=>{
-    res.status(401).send();
+    req.user = user;
+    req.token = token;
+    next();
+  }).catch((e) => {
+    res.status(403).send("找不到TOKEN");
   })
 }
 
-module.exports = {authenticate};
+module.exports = {
+  authenticate
+};
