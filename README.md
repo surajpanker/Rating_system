@@ -1,10 +1,10 @@
 <h1># Rating_system</h1>
 
 <h3>Technologies Used <h3/> 
-   <li> Nodejs<li/>
-   <li> MongoDb<li/>
-   <li> Mongoose<li/> 
-   <li>Express<li/>
+   Nodejs <br>
+   MongoDb <br>
+   Mongoose <br>
+   Express <br>
 
     
  ### Backend
@@ -16,7 +16,7 @@
 **The available application is connected to a MongoDB database online.**
   Inside the file, you need to change the database link from
   mongoose.connect('mongodb+srv://taskapp:taskapp@cluster0-7hhag.mongodb.net/rating_system?retryWrites=true&w=majority); to mongoose.connect("your-database-link");
-  <h3>All assumptions I have made<h3/>
+  <h3>All assumptions<h3/><br>
   <p> In this project , Basically i assume that by default all passanger and driver have 0 by default rating <p/>
   
   URI |	Returns
@@ -28,18 +28,18 @@
 
 
  <h3>datbase schema <h3/>
-    User has 
-      email
-     password
-     name
-     phone
-     rating [ by deafult 0]
-     roleStringTo  [ passanger /driver]  
-     roleString  [ passanger /driver]  
-     tokens
+     User has <br>
+      email  <br>
+     password  <br>
+     name <br>
+     phone <br>
+     rating [ by deafult 0] <br>
+     roleStringTo  [ passanger /driver]  <br>
+     roleString  [ passanger /driver]   <br>
+     tokens <br>
 
 
 <h3>Steps to run your application <h3/>
-    <li>npm i </li>
-    <li>npm start </li>
+    npm i <br>
+   npm start 
  
