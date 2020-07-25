@@ -39,7 +39,7 @@
      tokens <br>
 
 
-<h3>Steps to run your application <h3/>
+<h3>Steps to run  application <h3/>
     npm i <br>
    npm start 
  
