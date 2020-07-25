@@ -1,19 +1,17 @@
 <h1># Rating_system</h1>
 
 <h3>Technologies Used <h3/> 
-  <ol>
    <li> Nodejs<li/>
    <li> MongoDb<li/>
    <li> Mongoose<li/> 
    <li>Express<li/>
-   <ol/>
+
     
  ### Backend
 ![Nodejs - ExpressJS](https://github.com/margiki/NHS-nodejs-webapp/blob/master/github_readme_photos/backend.jpg)
  ### Database
 ![MongoDB - Mongoose](https://github.com/margiki/NHS-nodejs-webapp/blob/master/github_readme_photos/database.jpg)
  ### Databse Schema
-![Database schema](https://github.com/margiki/NHS-nodejs-webapp/blob/master/github_readme_photos/databas
 
 **The available application is connected to a MongoDB database online.**
   Inside the file, you need to change the database link from
